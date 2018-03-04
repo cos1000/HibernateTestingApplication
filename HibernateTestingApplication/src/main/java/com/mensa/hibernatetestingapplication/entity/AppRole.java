@@ -17,23 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal; 
 import javax.persistence.TemporalType; 
-import javax.persistence.ManyToMany;
 
 @Entity
 @Data
-@Table(name = "app_users")
-public class AppUser implements Serializable {
-
-    public AppUser() {
-
-    };
-
-    public AppUser(String code) {
-            this.code = code;
-
-    };
+@Table(name = "app_roles")
+public class AppRole implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +33,15 @@ public class AppUser implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany
-    private List<AppRole> roles; 
+    private List<AppUser> users; 
     
     @Column(name = "created_at")
     private Date created_at; 
-        
+
     @Column(name = "updated_at")
     private Date updated_at; 
         
