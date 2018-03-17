@@ -17,16 +17,34 @@ import com.mensa.hibernatetestingapplication.entity.AppUser;
  * Unit test for simple App.
  */
 public class AppUserTest extends TestCase {
-
-	public void testApp() {
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-
-		AppUser user = new AppUser("firstuser");
-		session.save(user);
-
-		session.getTransaction().commit();
-		session.close();
+        SessionFactory sessionFactory;
+        Session session; 
+    
+        public AppUserTest()
+        {
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+        }
+        
+        @Override
+        public void finalize()
+        {
+            session.getTransaction().rollback();
+            session.close();
+        }
+    
+	public void testCreateUser() {
+            AppUser user = new AppUser("firstuser");
+            session.save(user);
 	}
+        
+/*
+        @Test(expected = org.postgresql.util.PSQLException.class)
+	public void testCreateInvalidUserCode() {
+            AppUser user = new AppUser("firstuser12");
+            session.save(user);
+	}
+*/
+        
 }

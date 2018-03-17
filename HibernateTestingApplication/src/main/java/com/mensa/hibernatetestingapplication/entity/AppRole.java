@@ -17,13 +17,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal; 
 import javax.persistence.TemporalType; 
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Data
-@Table(name = "app_roles")
+@Table(name = "app_roles", uniqueConstraints = {@UniqueConstraint(columnNames = "code")})
 public class AppRole implements Serializable {
 
     @Id
@@ -36,7 +38,7 @@ public class AppRole implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
     private List<AppUser> users; 
     
     @Column(name = "created_at")

@@ -55,5 +55,6 @@ Contributor(s):
 
     <!-- Annotated entity classes -->
     <mapping class="com.mensa.hibernatetestingapplication.entity.AppUser"/>
+    <mapping class="com.mensa.hibernatetestingapplication.entity.AppRole"/>
   </session-factory>
 </hibernate-configuration>

@@ -10,6 +10,7 @@ import java.sql.Date;
 import lombok.Data;
 import java.sql.Timestamp; 
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,13 +18,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.Temporal; 
 import javax.persistence.TemporalType; 
 import javax.persistence.ManyToMany;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Data
-@Table(name = "app_users")
+@Table(name = "app_users", uniqueConstraints = {@UniqueConstraint(columnNames = "code")})
 public class AppUser implements Serializable {
 
     public AppUser() {
@@ -39,10 +42,10 @@ public class AppUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code")
+    @Column(name = "code", length = 10)
     private String code;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AppRole> roles; 
     
     @Column(name = "created_at")
