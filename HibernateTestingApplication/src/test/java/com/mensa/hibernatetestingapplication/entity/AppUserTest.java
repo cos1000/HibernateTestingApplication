@@ -20,12 +20,15 @@ public class AppUserTest extends TestCase {
         SessionFactory sessionFactory;
         Session session; 
     
+        // <editor-fold desc="Constructor">
         public AppUserTest()
         {
+            System.out.println("Start AppUser Test Constructor"); 
             sessionFactory = new Configuration().configure().buildSessionFactory();
             session = sessionFactory.openSession();
             session.beginTransaction();
         }
+        // </editor-fold>
         
         @Override
         public void finalize()
@@ -35,9 +38,21 @@ public class AppUserTest extends TestCase {
         }
     
 	public void testCreateUser() {
+            System.out.println("Start testCreateUser"); 
             AppUser user = new AppUser("firstuser");
             session.save(user);
+            //throw new java.lang.Error("*****************Testing Error*********************"); 
+            System.out.println("Finished testCreateUser"); 
 	}
+        
+        public void testDeleteUser() {
+            System.out.println("Start testDeleteUser"); 
+            AppUser user = new AppUser("firstuser");
+            session.save(user);
+            session.delete(user);
+            System.out.println("Finished testDeleteUser"); 
+            
+        }
         
 /*
         @Test(expected = org.postgresql.util.PSQLException.class)
