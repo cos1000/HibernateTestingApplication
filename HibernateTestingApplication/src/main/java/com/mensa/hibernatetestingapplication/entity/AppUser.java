@@ -6,9 +6,8 @@
 package com.mensa.hibernatetestingapplication.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 import lombok.Data;
-import java.sql.Timestamp; 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 
@@ -19,10 +18,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.Temporal; 
-import javax.persistence.TemporalType; 
 import javax.persistence.ManyToMany;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Data
@@ -30,16 +28,19 @@ import javax.persistence.UniqueConstraint;
 public class AppUser implements Serializable {
 
     public AppUser() {
-
+        //this.created_at = new Date(); 
+        //sthis.updated_at = new Date(); 
     };
 
     public AppUser(String code) {
-            this.code = code;
-
+        this(); 
+        this.code = code;
     };
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @Column(name = "code", length = 10)
@@ -49,9 +50,9 @@ public class AppUser implements Serializable {
     private List<AppRole> roles; 
     
     @Column(name = "created_at")
-    private Date created_at; 
+    private LocalDateTime created_at; 
         
     @Column(name = "updated_at")
-    private Date updated_at; 
+    private LocalDateTime updated_at; 
         
 }
